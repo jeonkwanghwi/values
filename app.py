@@ -15,7 +15,7 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # 템플릿 설정
-templates = Jinja2Templates(directory="static")
+templates = Jinja2Templates(directory=".")
 
 # SQLite 데이터베이스 초기화
 def init_db():
@@ -48,7 +48,7 @@ class ValueResponse(BaseModel):
 # 라우트 정의
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    return templates.TemplateResponse("values.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/api/values/", response_model=ValueResponse)
 async def create_value(value: Value):
